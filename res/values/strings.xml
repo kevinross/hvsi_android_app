@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">HvsI</string>
+	<string name="choose_language">Language</string>
+	<string name="register">Register</string>
+	<string name="login">Login</string>
+	<string name="logout">Logout</string>
+
+</resources>
