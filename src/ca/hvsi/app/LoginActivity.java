@@ -113,7 +113,7 @@ public class LoginActivity extends RoboSherlockActivity {
 			// that hierarchy.
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
-		case R.id.action_forgot_password:
+		case HvsIApp.FORGOT_ID:
 			new AsyncTask<String, Void, Boolean>() {
 				public Boolean doInBackground(String... args) {
 					return (Boolean)API.api().call("forgot_password", args[0]);
@@ -121,11 +121,9 @@ public class LoginActivity extends RoboSherlockActivity {
 				public void onPostExecute(Boolean val) {
 					AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
 					boolean result = val;
-					if (mEmail.isEmpty())
-						result = false;
-					String msg = getString(result?R.string.forgot_password_ok:R.string.forgot_password_fail);
+					String msg = getString(result?R.string.action_forgot_password_ok:R.string.action_forgot_password_fail);
 					builder.setMessage(msg).
-							setTitle(getString(R.string.action_forgot_password)).
+							setTitle(getString(R.string.action_forgot_password_title)).
 							setPositiveButton("OK", null).
 							show();
 				}
@@ -182,10 +180,6 @@ public class LoginActivity extends RoboSherlockActivity {
 		// Check for a valid password.
 		if (TextUtils.isEmpty(mPassword)) {
 			mPasswordView.setError(getString(R.string.error_field_required));
-			focusView = mPasswordView;
-			cancel = true;
-		} else if (mPassword.length() < 4) {
-			mPasswordView.setError(getString(R.string.error_invalid_password));
 			focusView = mPasswordView;
 			cancel = true;
 		}
