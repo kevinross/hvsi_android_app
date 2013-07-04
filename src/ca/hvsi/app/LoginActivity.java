@@ -1,6 +1,5 @@
 package ca.hvsi.app;
 
-import ca.hvsi.app.HvsIApp.setOptionsMenuTask;
 import ca.hvsi.lib.ApiClient;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -85,6 +84,7 @@ public class LoginActivity extends RoboSherlockActivity {
 						attemptLogin();
 					}
 				});
+		new HvsIApp.setOptionsMenuTask().execute(this);
 	}
 
 	/**

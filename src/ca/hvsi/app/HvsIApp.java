@@ -3,17 +3,15 @@ package ca.hvsi.app;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 
-import ca.hvsi.lib.ApiClient;
-import com.actionbarsherlock.app.SherlockActivity;
-
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockActivity;
 
-public class HvsIApp extends SherlockActivity {
+public class HvsIApp extends RoboSherlockActivity {
 	private String auth_task;
 	public static final int LOGIN_REQUEST_CODE = 1;
 	public static final int REGISTER_REQUEST_CODE = 2;
@@ -30,7 +28,7 @@ public class HvsIApp extends SherlockActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_hvsi_app);
-		new setOptionsMenuTask().execute((Void)null);
+		new setOptionsMenuTask().execute(this);
 	}
 
 	@Override
@@ -47,11 +45,11 @@ public class HvsIApp extends SherlockActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch(item.getItemId()) {
 		case LOGINOUT_ID:
-			if (logged_in) {
+			if (API.logged_in()) {
 				new Thread(new Runnable() {
 					public void run() {
 						API.api().call("logout");
-						new setOptionsMenuTask().execute((Void)null);
+						new setOptionsMenuTask().execute(this);
 					}
 				}).start();
 			} else {
@@ -71,7 +69,7 @@ public class HvsIApp extends SherlockActivity {
 	protected void onActivityResult(int req, int res, Intent data) {
 		if (req == LOGIN_REQUEST_CODE || req == REGISTER_REQUEST_CODE) {
 			if (res == LOGIN_OK) {
-				new setOptionsMenuTask().execute((Void)null);
+				new setOptionsMenuTask().execute(this);
 			} else if (res == REGISTER_OK) {
 				new Thread(new Runnable() {
 					public void run() {
@@ -96,20 +94,23 @@ public class HvsIApp extends SherlockActivity {
 							}
 						});
 					}}).start();
-				new setOptionsMenuTask().execute((Void)null);
+				new setOptionsMenuTask().execute(this);
 			}
 		}
 	}
-	public class setOptionsMenuTask extends AsyncTask {
-		@Override
-		protected Object doInBackground(Object... arg0) {
+	public static class setOptionsMenuTask extends AsyncTask<RoboSherlockActivity, Void, Void> {
+		private RoboSherlockActivity target = null;
+		protected Void doInBackground(RoboSherlockActivity... activity) {
 			// TODO Auto-generated method stub
-			logged_in = (Boolean)API.api().get("logged_in");
+			API.logged_in((Boolean)API.api().get("logged_in"));
+			API.can_register((Boolean)API.game().get("can_register"));
+			API.self((ca.hvsi.lib.Account)API.api().get("self"));
+			target = activity[0];
 			return null;
 		}
 		
 		protected void onPostExecute(Void result) {
-			invalidateOptionsMenu();
+			target.invalidateOptionsMenu();
 		}
 	}
 
