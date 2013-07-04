@@ -13,7 +13,7 @@
 	<application
 		android:name="ca.hvsi.app.API"
 		android:allowBackup="true"
-		android:debuggable="false"
+		android:debuggable="true"
 		android:icon="@drawable/ic_launcher"
 		android:label="@string/name"
 		android:theme="@style/AppTheme" >
