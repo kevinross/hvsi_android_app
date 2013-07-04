@@ -1,31 +1,31 @@
 package ca.hvsi.app;
 
+import java.util.HashMap;
+import javax.annotation.Nullable;
+
+import roboguice.inject.InjectView;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.Activity;
+import android.app.AlertDialog;
+
+import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockActivity;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
  * well.
  */
-public class RegisterActivity extends Activity {
-	/**
-	 * A dummy authentication store containing known user names and passwords.
-	 * TODO: remove after connecting to a real authentication system.
-	 */
-	private static final String[] DUMMY_CREDENTIALS = new String[] {
-			"foo@example.com:hello", "bar@example.com:world" };
+public class RegisterActivity extends RoboSherlockActivity {
 
 	/**
 	 * The default email to populate the email field with.
@@ -42,11 +42,18 @@ public class RegisterActivity extends Activity {
 	private String mPassword;
 
 	// UI references.
-	private EditText mEmailView;
-	private EditText mPasswordView;
-	private View mLoginFormView;
-	private View mLoginStatusView;
-	private TextView mLoginStatusMessageView;
+	@InjectView(R.id.email) private EditText mEmailView;
+	@InjectView(R.id.password) private EditText mPasswordView;
+	@InjectView(R.id.password_confirm) private EditText mConfirmView;
+	@InjectView(R.id.username) private EditText mUsernameView;
+	@InjectView(R.id.name) private EditText mNameView; 
+	@InjectView(R.id.student_number) private EditText mStudentView;
+	@InjectView(R.id.twitter) private EditText mTwitterView;
+	@InjectView(R.id.cell) private EditText mCellView;
+	@InjectView(R.id.language) private Spinner mLangView;
+	@InjectView(R.id.login_form) private View mLoginFormView;
+	@InjectView(R.id.register_status) private View mLoginStatusView;
+	@InjectView(R.id.register_status_message) private TextView mLoginStatusMessageView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
