@@ -1,10 +1,15 @@
 package ca.hvsi.lib;
+import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.protocol.HttpContext;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
 
 import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
 
 
 public class ApiClient extends RpcClient {

@@ -4,6 +4,7 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Type;
+import java.util.HashMap;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.*;
@@ -17,11 +18,13 @@ import org.apache.http.protocol.HttpContext;
 import org.apache.http.entity.StringEntity;
 import com.google.gson.*;
 import org.joda.time.*;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
 
 public abstract class RpcClient {
 	protected String base_endpoint = null;
 	private String endpoint = null;
-	protected Interface interface_ = null;
+	public Interface interface_ = null;
 	private CookieStore jar = Http.jar();//(ca.hvsi.app.API.context());
 	private HttpClient client = Http.client();
 	private HttpContext context = Http.context();
@@ -66,8 +69,18 @@ public abstract class RpcClient {
 			} else if (val.isNumber()) {
 				return val.getAsBigInteger();
 			} else if (val.isString()) {
+				DateTimeFormatter dtparser = ISODateTimeFormat.dateHourMinuteSecond();
+				try {
+					return dtparser.parseDateTime(val.getAsString());
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
 				return val.getAsString();
 			}
+		} else if (value.isJsonNull()) {
+			return null;
+		} else if (value.isJsonObject() && !value.getAsJsonObject().has("__meta__")) {
+			return gson.fromJson(value, HashMap.class);
 		}
 		return __resolve_references__(valuestr);
 	}

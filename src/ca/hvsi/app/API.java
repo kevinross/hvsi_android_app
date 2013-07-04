@@ -8,7 +8,10 @@ import ca.hvsi.lib.ApiClient;
 
 public class API extends Application{
 	private static Context context_;
-	private ApiClient root_, api_, globals_;
+	private ApiClient root_, api_, game_, database_, blog_, globals_;
+	private static ca.hvsi.lib.Account self_;
+	private static boolean logged_in_;
+	private static boolean can_register_;
 	public void onCreate() {
 		API.context_ = getApplicationContext();
 	}
@@ -24,8 +27,35 @@ public class API extends Application{
 	public static ApiClient globals() {
 		return ((API)context()).globalsapi();
 	}
+	public static ApiClient blog() {
+		return ((API)context()).blogapi();
+	}
+	public static ApiClient game() {
+		return ((API)context()).gameapi();
+	}
+	public static ApiClient database() {
+		return ((API)context()).databaseapi();
+	}
+	public static ca.hvsi.lib.Account self() {
+		return self_;
+	}
+	public static void self(ca.hvsi.lib.Account val) {
+		self_ = val;
+	}
+	public static boolean logged_in() {
+		return logged_in_;
+	}
+	public static void logged_in(boolean val) {
+		logged_in_ = val;
+	}
+	public static boolean can_register() {
+		return can_register_;
+	}
+	public static void can_register(boolean val) {
+		can_register_ = val;
+	}
 	public static String lang() {
-		return "e";
+		return self().language;
 	}
 	public ApiClient rootapi() {
 		if (root_ == null)
@@ -41,6 +71,21 @@ public class API extends Application{
 		if (globals_ == null)
 			globals_ = (ApiClient) rootapi().get("globals");
 		return globals_;
+	}
+	public ApiClient blogapi() {
+		if (blog_ == null)
+			blog_ = (ApiClient) apiapi().get("blog");
+		return blog_;
+	}
+	public ApiClient gameapi() {
+		if (game_ == null)
+			game_ = (ApiClient) apiapi().get("game");
+		return game_;
+	}
+	public ApiClient databaseapi() {
+		if (database_ == null)
+			database_ = (ApiClient) apiapi().get("database");
+		return database_;
 	}
 	public boolean isDebugBuild() 
     {
