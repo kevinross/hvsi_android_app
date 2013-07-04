@@ -131,17 +131,31 @@ public class LoginActivity extends RoboSherlockActivity {
 				}
 			}.execute(mEmail);
 			return true;
-		case R.id.action_register:
+		case HvsIApp.REGISTER_ID:
+			Intent do_register_intent = new Intent(getApplicationContext(), RegisterActivity.class);
+			startActivityForResult(do_register_intent, HvsIApp.REGISTER_REQUEST_CODE);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
-		getMenuInflater().inflate(R.menu.login, menu);
-		return true;
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		menu.clear();
+		menu.add(0, HvsIApp.FORGOT_ID, 0, getString(R.string.action_forgot_password_title));
+		ca.hvsi.lib.Account self = API.self();
+		if ((!API.logged_in() && API.can_register()) || (self != null && self.getClass().equals(ca.hvsi.lib.Admin.class)))
+			menu.add(0, HvsIApp.REGISTER_ID, 0, getString(R.string.register));
+		return super.onCreateOptionsMenu(menu);
+	}
+	@Override
+	protected void onActivityResult(int req, int res, Intent data) {
+		if (req == HvsIApp.REGISTER_REQUEST_CODE) {
+			if (res == HvsIApp.REGISTER_OK) {
+				setResult(res);
+				finish();
+			}
+		}
 	}
 
 	/**

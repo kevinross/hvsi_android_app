@@ -38,8 +38,7 @@ public class RegisterActivity extends RoboSherlockActivity {
 	private UserLoginTask mAuthTask = null;
 
 	// Values for email and password at the time of the login attempt.
-	private String mEmail;
-	private String mPassword;
+	private enum Strings { mEmail, mPassword, mConfirm, mUsername, mName, mStudent, mTwitter, mCell, mLang };
 
 	// UI references.
 	@InjectView(R.id.email) private EditText mEmailView;
@@ -54,50 +53,44 @@ public class RegisterActivity extends RoboSherlockActivity {
 	@InjectView(R.id.login_form) private View mLoginFormView;
 	@InjectView(R.id.register_status) private View mLoginStatusView;
 	@InjectView(R.id.register_status_message) private TextView mLoginStatusMessageView;
+	EditText[] views = new EditText[8];
+	String[] values = new String[views.length + 1];
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_register);
+		views[0] = mEmailView;
+		views[1] = mPasswordView;
+		views[2] = mConfirmView;
+		views[3] = mUsernameView;
+		views[4] = mNameView;
+		views[5] = mStudentView;
+		views[6] = mTwitterView;
+		views[7] = mCellView;
 
-		// Set up the login form.
-		mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
-		mEmailView = (EditText) findViewById(R.id.email);
-		mEmailView.setText(mEmail);
-
-		mPasswordView = (EditText) findViewById(R.id.password);
 		mPasswordView
 				.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 					@Override
 					public boolean onEditorAction(TextView textView, int id,
 							KeyEvent keyEvent) {
 						if (id == R.id.login || id == EditorInfo.IME_NULL) {
-							attemptLogin();
+							attemptRegister();
 							return true;
 						}
 						return false;
 					}
 				});
 
-		mLoginFormView = findViewById(R.id.login_form);
-		mLoginStatusView = findViewById(R.id.login_status);
-		mLoginStatusMessageView = (TextView) findViewById(R.id.login_status_message);
 
 		findViewById(R.id.sign_in_button).setOnClickListener(
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
-						attemptLogin();
+						attemptRegister();
 					}
 				});
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
-		getMenuInflater().inflate(R.menu.register, menu);
-		return true;
 	}
 
 	/**
@@ -105,42 +98,31 @@ public class RegisterActivity extends RoboSherlockActivity {
 	 * If there are form errors (invalid email, missing fields, etc.), the
 	 * errors are presented and no actual login attempt is made.
 	 */
-	public void attemptLogin() {
+	public void attemptRegister() {
 		if (mAuthTask != null) {
 			return;
 		}
 
 		// Reset errors.
-		mEmailView.setError(null);
-		mPasswordView.setError(null);
-
+		for (int i = 0; i < views.length; i++) {
+			views[i].setError(null);
+		}
 		// Store values at the time of the login attempt.
-		mEmail = mEmailView.getText().toString();
-		mPassword = mPasswordView.getText().toString();
+		for (int i = 0; i < views.length; i++) {
+			values[i] = views[i].getText().toString();
+		}
+		values[views.length] = mLangView.getSelectedItem().toString();
 
 		boolean cancel = false;
 		View focusView = null;
 
-		// Check for a valid password.
-		if (TextUtils.isEmpty(mPassword)) {
-			mPasswordView.setError(getString(R.string.error_field_required));
-			focusView = mPasswordView;
-			cancel = true;
-		} else if (mPassword.length() < 4) {
-			mPasswordView.setError(getString(R.string.error_invalid_password));
-			focusView = mPasswordView;
-			cancel = true;
-		}
-
-		// Check for a valid email address.
-		if (TextUtils.isEmpty(mEmail)) {
-			mEmailView.setError(getString(R.string.error_field_required));
-			focusView = mEmailView;
-			cancel = true;
-		} else if (!mEmail.contains("@")) {
-			mEmailView.setError(getString(R.string.error_invalid_email));
-			focusView = mEmailView;
-			cancel = true;
+		for (int i = 0; i < 6; i++) {
+			if (TextUtils.isEmpty(views[i].getText().toString())) {
+				views[i].setError(getString(R.string.error_field_required));
+				focusView = views[i];
+				cancel = true;
+				break;
+			}
 		}
 
 		if (cancel) {
@@ -150,7 +132,7 @@ public class RegisterActivity extends RoboSherlockActivity {
 		} else {
 			// Show a progress spinner, and kick off a background task to
 			// perform the user login attempt.
-			mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
+			mLoginStatusMessageView.setText(R.string.register_progress_registering);
 			showProgress(true);
 			mAuthTask = new UserLoginTask();
 			mAuthTask.execute((Void) null);
@@ -202,41 +184,29 @@ public class RegisterActivity extends RoboSherlockActivity {
 	 * Represents an asynchronous login/registration task used to authenticate
 	 * the user.
 	 */
-	public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+	public class UserLoginTask extends AsyncTask<Void, Void, HashMap<String,String>> {
 		@Override
-		protected Boolean doInBackground(Void... params) {
+		protected HashMap<String,String> doInBackground(Void... params) {
 			// TODO: attempt authentication against a network service.
-
-			try {
-				// Simulate network access.
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
-				return false;
-			}
-
-			for (String credential : DUMMY_CREDENTIALS) {
-				String[] pieces = credential.split(":");
-				if (pieces[0].equals(mEmail)) {
-					// Account exists, return true if the password matches.
-					return pieces[1].equals(mPassword);
-				}
-			}
-
-			// TODO: register the new account here.
-			return true;
+			return (HashMap<String,String>)API.api().call("register", values);
 		}
 
 		@Override
-		protected void onPostExecute(final Boolean success) {
+		protected void onPostExecute(final HashMap<String,String> result) {
 			mAuthTask = null;
 			showProgress(false);
-
-			if (success) {
+			RegisterActivity.this.setResult(result.get("result").equals("true")?HvsIApp.REGISTER_OK:HvsIApp.REGISTER_INCOMPLETE);
+			if (result.get("result").equals("true")) {
 				finish();
 			} else {
-				mPasswordView
-						.setError(getString(R.string.error_incorrect_password));
-				mPasswordView.requestFocus();
+				AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+				int res = R.string.error_registration_other;
+				res = result.get("message").equals("dup")?R.string.error_registration_dup:res;
+				res = result.get("message").equals("pass")?R.string.error_registration_pass:res;
+				builder.setMessage(getString(res)).
+						setTitle(getString(R.string.error_bad_registration)).
+						setPositiveButton("OK", null).
+						show();
 			}
 		}
 

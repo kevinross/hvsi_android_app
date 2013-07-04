@@ -1,7 +1,12 @@
 package ca.hvsi.app;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+
 import ca.hvsi.lib.ApiClient;
 import com.actionbarsherlock.app.SherlockActivity;
+
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,15 +15,16 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class HvsIApp extends SherlockActivity {
 	private String auth_task;
-	private boolean logged_in = false;
 	public static final int LOGIN_REQUEST_CODE = 1;
-	public static final int REGISTER_REQUEST_CODE = 1;
+	public static final int REGISTER_REQUEST_CODE = 2;
+	public static final int FORGOT_PASSWORD_REQUEST_CODE = 3;
 	public static final int LOGIN_OK = 1;
 	public static final int LOGIN_INCOMPLETE = 2;
-	public static final int REGISTER_OK = 1;
-	public static final int REGISTER_INCOMPLETE = 2;
+	public static final int REGISTER_OK = 3;
+	public static final int REGISTER_INCOMPLETE = 4;
 	public static final int LOGINOUT_ID = 1;
 	public static final int REGISTER_ID = 2;
+	public static final int FORGOT_ID = 3;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +36,9 @@ public class HvsIApp extends SherlockActivity {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		menu.clear();
-		menu.add(0, LOGINOUT_ID, 0, getString(logged_in?R.string.logout:R.string.login));
-		if (!logged_in)
+		menu.add(0, LOGINOUT_ID, 0, getString(API.logged_in()?R.string.logout:R.string.login));
+		ca.hvsi.lib.Account self = API.self();
+		if ((!API.logged_in() && API.can_register()) || (self != null && self.getClass().equals(ca.hvsi.lib.Admin.class)))
 			menu.add(0, REGISTER_ID, 0, getString(R.string.register));
 		return super.onCreateOptionsMenu(menu);
 	}
@@ -63,7 +70,32 @@ public class HvsIApp extends SherlockActivity {
 	@Override
 	protected void onActivityResult(int req, int res, Intent data) {
 		if (req == LOGIN_REQUEST_CODE || req == REGISTER_REQUEST_CODE) {
-			if (res == LOGIN_OK || res == REGISTER_OK) {
+			if (res == LOGIN_OK) {
+				new setOptionsMenuTask().execute((Void)null);
+			} else if (res == REGISTER_OK) {
+				new Thread(new Runnable() {
+					public void run() {
+						final AlertDialog.Builder builder = new AlertDialog.Builder(HvsIApp.this);
+						String msg = getString(R.string.register_progress_registered);
+						DateTime t = (DateTime) API.game().get("start_time");
+						if (t == null)
+							return;
+						builder.setMessage(
+									String.format(
+											msg, 
+											t.toString(
+													DateTimeFormat.forPattern("MMMM dd, yyyy")),
+											t.toString(
+													DateTimeFormat.forPattern("hh:mmaa")))).
+							setTitle(getString(R.string.register_progress_registered_title)).
+							setPositiveButton("OK", null);
+						HvsIApp.this.runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								builder.show();
+							}
+						});
+					}}).start();
 				new setOptionsMenuTask().execute((Void)null);
 			}
 		}
