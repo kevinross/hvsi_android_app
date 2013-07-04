@@ -15,11 +15,11 @@
 		android:allowBackup="true"
 		android:debuggable="false"
 		android:icon="@drawable/ic_launcher"
-		android:label="@string/app_name"
+		android:label="@string/name"
 		android:theme="@style/AppTheme" >
 		<activity
 			android:name="ca.hvsi.app.HvsIApp"
-			android:label="@string/app_name" >
+			android:label="@string/name" >
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 
@@ -28,7 +28,7 @@
 		</activity>
 		<activity
 			android:name="ca.hvsi.app.LoginActivity"
-			android:label="@string/title_activity_login"
+			android:label="@string/activity_login_title"
 			android:parentActivityName=".HvsIApp"
 			android:windowSoftInputMode="adjustResize|stateVisible" >
 			<meta-data
@@ -37,7 +37,7 @@
 		</activity>
 		<activity
 			android:name="ca.hvsi.app.RegisterActivity"
-			android:label="@string/title_activity_register"
+			android:label="@string/activity_register_title"
 			android:windowSoftInputMode="adjustResize|stateVisible" >
 		</activity>
 	</application>

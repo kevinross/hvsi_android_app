@@ -1,10 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+	<string-array name="languages">
+		<item>English</item>
+		<item>Français</item>
+	</string-array>
 
-    <string name="app_name">HvsI</string>
+    <string name="name">HvsI</string>
 	<string name="choose_language">Language</string>
 	<string name="register">Register</string>
 	<string name="login">Login</string>
 	<string name="logout">Logout</string>
+	
+	<string name="activity_login_title">Login</string>
+	<string name="activity_register_title">Register</string>
+	<string name="action_forgot_password_title">Recover lost password</string>
 
+	<!-- Strings related to login -->
+	<string name="action_sign_in">Sign in</string>
+	<string name="login_progress_signing_in">Signing in&#8230;</string>
+	<string name="register_progress_registering">Registering&#8230;</string>
+	<string name="register_progress_registered_title">Registration Complete</string>
+	<string name="register_progress_registered">Visit an HvsI station starting %1$s at %2$s to pick up your kit.</string>
+	<string name="error_invalid_email">This email address is invalid</string>
+	<string name="error_invalid_password">This password is too short</string>
+	<string name="error_incorrect_password">This password is incorrect</string>
+	<string name="error_field_required">This field is required</string>
+	<string name="error_registration_dup">A user already exists with some or all of this identifying information.</string>
+	<string name="error_registration_pass">Passwords do not match; check your spelling and try again.</string>
+	<string name="error_registration_other">An internal error occured, please try again.</string>
+	<string name="error_bad_registration">Registration Failed</string>
+	<string name="field_email">Email</string>
+	<string name="field_password">Password</string>
+	<string name="field_name">Name</string>
+	<string name="field_username">Username</string>
+	<string name="field_password_confirm">Confirm Password</string>
+	<string name="field_language">Language</string>
+	<string name="field_student_number">Student Number</string>
+	<string name="field_twitter">Twitter (optional)</string>
+	<string name="field_cell">Cell Number (optional)</string>
+	
+	<string name="action_forgot_password_ok">An email was sent to the address associated with the specified username.  Follow the instructions within to reset your password.</string>
+	<string name="action_forgot_password_fail">No account with the specified username.  Check spelling and try again.</string>
 </resources>
