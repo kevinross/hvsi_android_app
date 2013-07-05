@@ -66,7 +66,7 @@ public class ApiClient extends RpcClient {
 				} else {
 					objects.add(gson.fromJson(jsonobj, klass));
 				}
-			} catch (Exception e) {
+			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
