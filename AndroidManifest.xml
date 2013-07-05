@@ -40,6 +40,14 @@
 			android:label="@string/activity_register_title"
 			android:windowSoftInputMode="adjustResize|stateVisible" >
 		</activity>
+		<activity
+			android:name="ca.hvsi.app.PostActivity"
+			android:label="@string/title_activity_post"
+			android:parentActivityName="ca.hvsi.app.HvsIApp" >
+			<meta-data
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value="ca.hvsi.app.HvsIApp" />
+		</activity>
 	</application>
 
 </manifest>

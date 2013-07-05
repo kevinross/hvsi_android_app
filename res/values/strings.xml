@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
 	<string-array name="languages">
 		<item>English</item>
 		<item>Français</item>
 	</string-array>
 
-    <string name="name">HvsI</string>
+	<string name="name">HvsI</string>
 	<string name="choose_language">Language</string>
 	<string name="register">Register</string>
 	<string name="login">Login</string>
 	<string name="logout">Logout</string>
-	
 	<string name="activity_login_title">Login</string>
 	<string name="activity_register_title">Register</string>
 	<string name="action_forgot_password_title">Recover lost password</string>
@@ -38,7 +38,11 @@
 	<string name="field_student_number">Student Number</string>
 	<string name="field_twitter">Twitter (optional)</string>
 	<string name="field_cell">Cell Number (optional)</string>
-	
 	<string name="action_forgot_password_ok">An email was sent to the address associated with the specified username.  Follow the instructions within to reset your password.</string>
 	<string name="action_forgot_password_fail">No account with the specified username.  Check spelling and try again.</string>
+	<string name="title_activity_post">Post</string>
+	<string name="action_settings">Settings</string>
+
+	<string name="post_loading">Loading&#8230;</string>
+
 </resources>
