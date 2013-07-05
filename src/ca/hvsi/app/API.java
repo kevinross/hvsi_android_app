@@ -61,7 +61,9 @@ public class API extends Application{
 		can_register_ = val;
 	}
 	public static String lang() {
-		return self().language;
+		if (self() != null)
+			return self().language;
+		return (String)api().get("language");
 	}
 	public ApiClient rootapi() {
 		if (root_ == null)
