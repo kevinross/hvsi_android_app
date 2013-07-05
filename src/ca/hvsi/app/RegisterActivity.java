@@ -1,7 +1,6 @@
 package ca.hvsi.app;
 
 import java.util.HashMap;
-import javax.annotation.Nullable;
 
 import roboguice.inject.InjectView;
 import android.animation.Animator;
