@@ -1,5 +1,6 @@
 package ca.hvsi.app;
 import android.app.Application;
+import com.usepropeller.routable.Router;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -14,6 +15,11 @@ public class API extends Application{
 	private static boolean can_register_;
 	public void onCreate() {
 		API.context_ = getApplicationContext();
+        Router.sharedRouter().setContext(API.context_);
+        Router.sharedRouter().map("home", HvsIApp.class);
+        Router.sharedRouter().map("login", LoginActivity.class);
+        Router.sharedRouter().map("register", RegisterActivity.class);
+        Router.sharedRouter().map("post/:pid", PostActivity.class);
 	}
 	public static Context context() {
 		return context_;
