@@ -1,4 +1,7 @@
 package ca.hvsi.app;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import android.app.Application;
 import com.usepropeller.routable.Router;
 import android.content.Context;
@@ -69,7 +72,7 @@ public class API extends Application{
 	}
 	public ApiClient rootapi() {
 		if (root_ == null)
-			root_ = new ApiClient(isDebugBuild()?"http://192.168.1.102:9055/api":"http://hvsidevel.aws.af.cm/api");
+			root_ = new ApiClient(false?"http://10.0.2.2:9055/api":"http://hvsidevel.aws.af.cm/api");
 		return root_;
 	}
 	public ApiClient apiapi() {
