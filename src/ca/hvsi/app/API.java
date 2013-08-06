@@ -13,13 +13,15 @@ public class API extends Application{
 	private static ca.hvsi.lib.Account self_;
 	private static boolean logged_in_;
 	private static boolean can_register_;
+	public static HvsIFragments fragments;
 	public void onCreate() {
 		API.context_ = getApplicationContext();
         Router.sharedRouter().setContext(API.context_);
         Router.sharedRouter().map("home", HvsIApp.class);
         Router.sharedRouter().map("login", LoginActivity.class);
         Router.sharedRouter().map("register", RegisterActivity.class);
-        Router.sharedRouter().map("post/:pid", PostActivity.class);
+        Router.sharedRouter().map("post/view/" +
+        		":pid", PostActivity.class);
 	}
 	public static Context context() {
 		return context_;
