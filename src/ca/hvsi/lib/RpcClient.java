@@ -92,20 +92,30 @@ public abstract class RpcClient {
 			if (val.isBoolean()) {
 				return val.getAsBoolean();
 			} else if (val.isNumber()) {
-				return val.getAsBigInteger();
+				return val.getAsNumber();
 			} else if (val.isString()) {
 				DateTimeFormatter dtparser = ISODateTimeFormat.dateHourMinuteSecond();
 				try {
 					return dtparser.parseDateTime(val.getAsString());
 				} catch (Exception ex) {
-					ex.printStackTrace();
 				}
 				return val.getAsString();
+			} else {
+				return null;
 			}
 		} else if (value.isJsonNull()) {
 			return null;
 		} else if (value.isJsonObject() && !value.getAsJsonObject().has("__meta__")) {
 			return gson.fromJson(value, HashMap.class);
+		} else if (value.isJsonArray()) {
+			if (value.getAsJsonArray().size() == 0)
+				return new LinkedList();
+			JsonElement obj = value.getAsJsonArray().get(0);
+			if (obj.isJsonObject()) {
+				if (!obj.getAsJsonObject().has("__meta__")) {
+					return gson.fromJson(value, LinkedList.class);
+				}
+			}
 		}
 		return __resolve_references__(valuestr);
 	}
