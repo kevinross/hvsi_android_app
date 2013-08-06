@@ -36,9 +36,6 @@ public abstract class RpcClient {
 	private String endpoint = null;
 	private HashMap<String, HashMap<ArrayWrapper, Object>> cache = null;
 	public Interface interface_ = null;
-	private CookieStore jar = Http.jar();//(ca.hvsi.app.API.context());
-	private HttpClient client = Http.client();
-	private HttpContext context = Http.context();
 	protected Gson gson = new GsonBuilder().registerTypeAdapter(DateTime.class, new DateTimeTypeConverter()).create();
 	public RpcClient(String base_endpoint) {
 		this(base_endpoint, null);
@@ -161,28 +158,41 @@ public abstract class RpcClient {
 		post.setEntity(req);
 		post.setHeader(HTTP.CONTENT_TYPE, "application/json");
 		HttpResponse resp = null;
+		HttpClient client = Http.client();
 		try {
-			resp = client.execute(post, context);
+			resp = client.execute(post, Http.context());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
+		Object ret = null;
+		HttpEntity rep = resp.getEntity();
+		InputStreamReader is = null; 
 		try {
-			BufferedReader rd = new BufferedReader
-					  (new InputStreamReader(resp.getEntity().getContent()));
+			is = new InputStreamReader(rep.getContent());
+			BufferedReader rd = new BufferedReader(is);
 			String out = "";
 			String line = null;
 			while ((line = rd.readLine()) != null) {
 				out += line;
 			}
-			return __parse_response__(out);
+			resp.getEntity().consumeContent();
+			ret = __parse_response__(out);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return null;
+		} finally {
+			if (is != null)
+				try {
+					is.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		}
 		if (usecache) set(endpoint, func, ret);
+		return ret;
 	}
 	public Object call(String func, Object... args) {
 		return __rpccall__(this.endpoint, new FunctionCall(func, args));
