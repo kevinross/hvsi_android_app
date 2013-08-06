@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content">
+
+	<TextView
+		android:id="@+id/blog_list_text_title"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:textSize="18sp" 
+		android:textColor="@android:color/white"
+		android:textColorHint="@android:color/white" 
+		android:gravity="top"
+		android:layout_alignParentTop="true"/>
+	
+	<TextView
+		android:id="@+id/blog_list_text_date"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:textSize="14sp" 
+		android:textColor="@android:color/secondary_text_dark"
+		android:textColorHint="@android:color/secondary_text_dark" 
+		android:gravity="right|center_vertical"
+		android:layout_alignParentTop="true"
+		android:text="2013-01-01"/>
+
+	<TextView
+		android:id="@+id/blog_list_text_content_snippet"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:ellipsize="end"
+		android:gravity="bottom"
+		android:lines="1"
+		android:maxLines="1"
+		android:singleLine="true"
+		android:textColor="@android:color/secondary_text_dark"
+		android:textColorHint="@android:color/secondary_text_dark"
+		android:textSize="14sp" 
+		android:layout_below="@+id/blog_list_text_title"/>
+</RelativeLayout>
