@@ -7,6 +7,8 @@ import roboguice.inject.InjectView;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import ca.hvsi.lib.PostDict;
+
 import com.usepropeller.routable.Router;
 
 import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockActivity;

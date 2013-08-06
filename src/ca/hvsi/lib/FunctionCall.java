@@ -10,4 +10,12 @@ public class FunctionCall {
 		this.func = func;
 		this.args = args;
 	}
+	public String toString() {
+		String val = func + "(";
+		for (Object i : args) {
+			val += i.toString() + ", ";
+		}
+		val+= ")";
+		return val.replace(", )", ")");
+	}
 }

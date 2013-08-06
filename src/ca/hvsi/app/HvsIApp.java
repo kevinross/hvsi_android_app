@@ -109,7 +109,7 @@ public class HvsIApp extends RoboSherlockFragmentActivity
 			break;
 		}
 		
-		return super.onOptionsItemSelected(item);
+		return true;
 	}
 	@Override
 	protected void onActivityResult(int req, int res, Intent data) {
@@ -142,11 +142,13 @@ public class HvsIApp extends RoboSherlockFragmentActivity
 					}}).start();
 				new setOptionsMenuTask().execute(this);
 			}
+			return;
 		}
+		super.onActivityResult(req, res, data);
 	}
-	public static class setOptionsMenuTask extends AsyncTask<RoboSherlockActivity, Void, Void> {
-		private RoboSherlockActivity target = null;
-		protected Void doInBackground(RoboSherlockActivity... activity) {
+	public static class setOptionsMenuTask extends AsyncTask<RoboSherlockFragmentActivity, Void, Void> {
+		private RoboSherlockFragmentActivity target = null;
+		protected Void doInBackground(RoboSherlockFragmentActivity... activity) {
 			// TODO Auto-generated method stub
 			API.logged_in((Boolean)API.api().get("logged_in"));
 			API.can_register((Boolean)API.game().get("can_register"));

@@ -5,6 +5,8 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockActivity;
+import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockFragmentActivity;
+
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -24,7 +26,7 @@ import android.support.v4.app.NavUtils;
  * Activity which displays a login screen to the user, offering registration as
  * well.
  */
-public class LoginActivity extends RoboSherlockActivity {
+public class LoginActivity extends RoboSherlockFragmentActivity {
 
 	/**
 	 * The default email to populate the email field with.
