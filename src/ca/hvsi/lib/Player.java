@@ -1,7 +1,7 @@
 package ca.hvsi.lib;
 
 public class Player extends Account {
-	int student_num;
-	String twitter, cell, state, game_id;
-	boolean signedin, zero;
+	public int student_num;
+	public String twitter, cell, state, game_id;
+	public boolean signedin, zero;
 }
