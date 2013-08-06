@@ -85,22 +85,22 @@ public class PostActivity extends RoboSherlockActivity {
 			post_content_container.setVisibility(show ? View.GONE : View.VISIBLE);
 		}
 	}
-	private class updatePostDetails extends AsyncTask<Object, Void, HashMap> {
+	private class updatePostDetails extends AsyncTask<Object, Void, PostDict> {
 		RoboSherlockActivity activity;
 		String lang;
 		@SuppressWarnings("rawtypes")
 		@Override
-		protected HashMap doInBackground(Object... params) {
+		protected PostDict doInBackground(Object... params) {
 			activity = (RoboSherlockActivity) params[0];
 			lang = API.lang();
-			return (HashMap) API.blog().call("post_dict", params[1]);
+			return (PostDict) API.blog().call("post_dict", params[1]);
 		}
 		
 		@SuppressWarnings("rawtypes")
-		protected void onPostExecute(HashMap result) {
-			activity.setTitle((String)((LinkedTreeMap)result.get(lang)).get("title"));
-			String content = ((String)((LinkedTreeMap)result.get(lang)).get("content"));
-			post_content.loadData(String.format("<html><body>%s</body></html>", content), "text/html", "utf-8");
+		protected void onPostExecute(PostDict result) {
+			activity.setTitle(result.content.title);
+			String content = (result.content.content);
+			post_content.loadDataWithBaseURL(null, String.format("<html><body>%s</body></html>", content), "text/html", "utf-8", null);
 			show_progress(false);
 		}
 	}
