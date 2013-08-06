@@ -256,7 +256,7 @@ public class LoginActivity extends RoboSherlockFragmentActivity {
 		@Override
 		protected Boolean doInBackground(Void... params) {
 			ApiClient api = API.api();
-			api.call("login", mEmail, mPassword);
+			api.call_nocache("login", mEmail, mPassword);
 			return (Boolean)api.get("logged_in");
 		}
 
