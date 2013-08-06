@@ -117,7 +117,7 @@ public class RegisterActivity extends RoboSherlockActivity {
 
 		for (int i = 0; i < 6; i++) {
 			if (TextUtils.isEmpty(views[i].getText().toString())) {
-				views[i].setError(getString(R.string.error_field_required));
+				views[i].setError(getString(R.string.pages_login_error_field_req));
 				focusView = views[i];
 				cancel = true;
 				break;
@@ -131,7 +131,7 @@ public class RegisterActivity extends RoboSherlockActivity {
 		} else {
 			// Show a progress spinner, and kick off a background task to
 			// perform the user login attempt.
-			mLoginStatusMessageView.setText(R.string.register_progress_registering);
+			mLoginStatusMessageView.setText(R.string.pages_register_inprogress);
 			showProgress(true);
 			mAuthTask = new UserLoginTask();
 			mAuthTask.execute((Void) null);

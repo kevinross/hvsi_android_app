@@ -121,9 +121,9 @@ public class LoginActivity extends RoboSherlockActivity {
 				public void onPostExecute(Boolean val) {
 					AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
 					boolean result = val;
-					String msg = getString(result?R.string.action_forgot_password_ok:R.string.action_forgot_password_fail);
+					String msg = getString(result?R.string.pages_forgot_password_ok:R.string.pages_forgot_password_fail);
 					builder.setMessage(msg).
-							setTitle(getString(R.string.action_forgot_password_title)).
+							setTitle(getString(R.string.pages_forgot_password_title)).
 							setPositiveButton("OK", null).
 							show();
 				}
@@ -140,10 +140,10 @@ public class LoginActivity extends RoboSherlockActivity {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		menu.clear();
-		menu.add(0, HvsIApp.FORGOT_ID, 0, getString(R.string.action_forgot_password_title));
+		menu.add(0, HvsIApp.FORGOT_ID, 0, getString(R.string.pages_forgot_password_title));
 		ca.hvsi.lib.Account self = API.self();
 		if ((!API.logged_in() && API.can_register()) || (self != null && self.getClass().equals(ca.hvsi.lib.Admin.class)))
-			menu.add(0, HvsIApp.REGISTER_ID, 0, getString(R.string.register));
+			menu.add(0, HvsIApp.REGISTER_ID, 0, getString(R.string.pages_register_title));
 		return super.onCreateOptionsMenu(menu);
 	}
 	@Override
@@ -179,14 +179,14 @@ public class LoginActivity extends RoboSherlockActivity {
 
 		// Check for a valid password.
 		if (TextUtils.isEmpty(mPassword)) {
-			mPasswordView.setError(getString(R.string.error_field_required));
+			mPasswordView.setError(getString(R.string.pages_login_error_field_req));
 			focusView = mPasswordView;
 			cancel = true;
 		}
 
 		// Check for a valid email address.
 		if (TextUtils.isEmpty(mEmail)) {
-			mEmailView.setError(getString(R.string.error_field_required));
+			mEmailView.setError(getString(R.string.pages_login_error_field_req));
 			focusView = mEmailView;
 			cancel = true;
 		}
@@ -198,7 +198,7 @@ public class LoginActivity extends RoboSherlockActivity {
 		} else {
 			// Show a progress spinner, and kick off a background task to
 			// perform the user login attempt.
-			mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
+			mLoginStatusMessageView.setText(R.string.pages_login_inprogress);
 			showProgress(true);
 			mAuthTask = new UserLoginTask();
 			mAuthTask.execute((Void) null);
@@ -267,7 +267,7 @@ public class LoginActivity extends RoboSherlockActivity {
 				finish();
 			} else {
 				mPasswordView
-						.setError(getString(R.string.error_incorrect_password));
+						.setError(getString(R.string.pages_login_error_failed));
 				mPasswordView.requestFocus();
 			}
 		}

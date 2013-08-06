@@ -32,7 +32,7 @@ public class PostActivity extends RoboSherlockActivity {
 		setContentView(R.layout.activity_post);
 		// Show the Up button in the action bar.
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		setTitle(getString(R.string.post_loading));
+		setTitle(getString(R.string.pages_post_loading));
 		Bundle intent_extras = getIntent().getExtras();
 		new updatePostDetails().execute(this, Integer.parseInt(intent_extras.getString("pid")));
 		post_content.setWebViewClient(new WebViewClient() {  

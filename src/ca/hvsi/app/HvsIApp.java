@@ -69,10 +69,10 @@ public class HvsIApp extends RoboSherlockFragmentActivity
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		menu.clear();
-		menu.add(0, LOGINOUT_ID, 0, getString(API.logged_in()?R.string.logout:R.string.login));
+		menu.add(0, LOGINOUT_ID, 0, getString(API.logged_in()?R.string.pages_login_opposite:R.string.pages_login_title));
 		ca.hvsi.lib.Account self = API.self();
 		if ((!API.logged_in() && API.can_register()) || (self != null && self.getClass().equals(ca.hvsi.lib.Admin.class)))
-			menu.add(0, REGISTER_ID, 0, getString(R.string.register));
+			menu.add(0, REGISTER_ID, 0, getString(R.string.pages_register_title));
 		return super.onCreateOptionsMenu(menu);
 	}
 	
@@ -109,7 +109,7 @@ public class HvsIApp extends RoboSherlockFragmentActivity
 				new Thread(new Runnable() {
 					public void run() {
 						final AlertDialog.Builder builder = new AlertDialog.Builder(HvsIApp.this);
-						String msg = getString(R.string.register_progress_registered);
+						String msg = getString(R.string.pages_register_complete_msg);
 						DateTime t = (DateTime) API.game().get("start_time");
 						if (t == null)
 							return;
@@ -120,7 +120,7 @@ public class HvsIApp extends RoboSherlockFragmentActivity
 													DateTimeFormat.forPattern("MMMM dd, yyyy")),
 											t.toString(
 													DateTimeFormat.forPattern("hh:mmaa")))).
-							setTitle(getString(R.string.register_progress_registered_title)).
+							setTitle(getString(R.string.pages_register_complete)).
 							setPositiveButton("OK", null);
 						HvsIApp.this.runOnUiThread(new Runnable() {
 							@Override
