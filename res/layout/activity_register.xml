@@ -25,7 +25,7 @@
 			android:layout_height="wrap_content"
 			android:layout_marginBottom="16dp"
 			android:fontFamily="sans-serif-light"
-			android:text="@string/register_progress_registering"
+			android:text="@string/pages_register_inprogress"
 			android:textAppearance="?android:attr/textAppearanceMedium" />
 	</LinearLayout>
 
@@ -44,7 +44,7 @@
 				android:id="@+id/name"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:hint="@string/field_name"
+				android:hint="@string/fields_name"
 				android:inputType="textNoSuggestions"
 				android:maxLines="1"
 				android:singleLine="true" />
@@ -53,7 +53,7 @@
 				android:id="@+id/username"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:hint="@string/field_username"
+				android:hint="@string/fields_username"
 				android:inputType="textNoSuggestions"
 				android:maxLines="1"
 				android:singleLine="true" />
@@ -62,7 +62,7 @@
 				android:id="@+id/email"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:hint="@string/field_email"
+				android:hint="@string/fields_email"
 				android:inputType="textEmailAddress"
 				android:maxLines="1"
 				android:singleLine="true" />
@@ -71,7 +71,7 @@
 				android:id="@+id/password"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:hint="@string/field_password"
+				android:hint="@string/fields_password"
 				android:inputType="textPassword"
 				android:maxLines="1"
 				android:singleLine="true" />
@@ -80,7 +80,7 @@
 				android:id="@+id/password_confirm"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:hint="@string/field_password_confirm"
+				android:hint="@string/fields_password_confirm"
 				android:inputType="textPassword"
 				android:maxLines="1"
 				android:singleLine="true" />
@@ -89,7 +89,7 @@
 				android:id="@+id/student_number"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:hint="@string/field_student_number"
+				android:hint="@string/fields_student_number"
 				android:inputType="number"
 				android:maxLines="1"
 				android:singleLine="true" />
@@ -98,7 +98,7 @@
 				android:id="@+id/twitter"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:hint="@string/field_twitter"
+				android:hint="@string/fields_twitter"
 				android:inputType="textNoSuggestions"
 				android:maxLines="1"
 				android:singleLine="true" />
@@ -107,7 +107,7 @@
 				android:id="@+id/cell"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:hint="@string/field_cell"
+				android:hint="@string/fields_cell"
 				android:inputType="phone"
 				android:maxLines="1"
 				android:singleLine="true" />
@@ -116,7 +116,7 @@
 				android:id="@+id/language"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content" 
-				android:prompt="@string/field_language" 
+				android:prompt="@string/fields_language" 
 				android:entries="@array/languages"/>
 
 			<Button
@@ -127,7 +127,7 @@
 				android:layout_marginTop="16dp"
 				android:paddingLeft="32dp"
 				android:paddingRight="32dp"
-				android:text="@string/register" />
+				android:text="@string/pages_register_title" />
 		</LinearLayout>
 
 	</ScrollView>
