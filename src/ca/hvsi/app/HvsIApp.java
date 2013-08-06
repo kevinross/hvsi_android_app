@@ -81,12 +81,23 @@ public class HvsIApp extends RoboSherlockFragmentActivity
 		switch(item.getItemId()) {
 		case LOGINOUT_ID:
 			if (API.logged_in()) {
-				new Thread(new Runnable() {
-					public void run() {
-						API.api().call("logout");
-						new setOptionsMenuTask().execute(this);
+				new AsyncTask<RoboSherlockFragmentActivity, Void, Void>() {
+					private RoboSherlockFragmentActivity activity;
+					@Override
+					protected Void doInBackground(RoboSherlockFragmentActivity... params) {
+						API.api().call_nocache("logout");
+						activity = params[0];
+						return null;
 					}
-				}).start();
+					protected void onPostExecute(Void param) {
+						new setOptionsMenuTask().execute(activity);
+						for (int i = 0; i < API.fragments.getCount(); i++) {
+							((HvsIFragment)API.fragments.getItem(i)).clear_self();
+						}
+						tab_indicator.notifyDataSetChanged();
+						pager.setCurrentItem(0, true);
+					}
+				}.execute(this);
 			} else {
 				Intent do_login_intent = new Intent(this, LoginActivity.class);
 				startActivityForResult(do_login_intent, LOGIN_REQUEST_CODE);
