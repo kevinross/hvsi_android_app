@@ -1,0 +1,84 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/RelativeLayout1"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	tools:context=".TagFragment" >
+
+    <ImageView
+    	android:id="@+id/qr_code"
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:layout_centerHorizontal="true"
+    	android:layout_centerVertical="true"
+    	android:scaleType="fitStart"
+    	android:src="@drawable/demo_qr"
+    	android:visibility="gone" />
+
+    <TextView
+    	android:id="@+id/id_code"
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:layout_below="@id/qr_code"
+    	android:layout_centerHorizontal="true"
+    	android:text="H*******I"
+    	android:textAppearance="?android:attr/textAppearanceLarge"
+    	android:textSize="40sp"
+    	android:textColor="@android:color/white"
+    	android:visibility="gone" />
+
+    <Button
+    	android:id="@+id/human_code_dotag"
+    	style="?android:attr/buttonStyleSmall"
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:layout_alignBaseline="@+id/human_code"
+    	android:layout_alignBottom="@+id/human_code"
+    	android:layout_toRightOf="@+id/human_code"
+    	android:text="@string/pages_tag_human_go"
+    	android:textColor="@android:color/white"
+    	android:textColorLink="@android:color/white"
+    	android:visibility="gone" />
+
+    <EditText
+    	android:id="@+id/human_code"
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:layout_centerHorizontal="true"
+    	android:layout_centerVertical="true"
+    	android:ems="10"
+    	android:hint="@string/pages_tag_human_hint"
+    	android:textAllCaps="true"
+    	android:textColor="@android:color/white"
+    	android:visibility="gone" />
+
+    <Button
+    	android:id="@+id/human_code_doscan"
+    	style="?android:attr/buttonStyleSmall"
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:layout_alignBaseline="@+id/human_code"
+    	android:layout_alignBottom="@+id/human_code"
+    	android:layout_toLeftOf="@+id/human_code"
+    	android:text="@string/pages_tag_human_scan"
+    	android:textColor="@android:color/white"
+    	android:textColorLink="@android:color/white"
+    	android:visibility="gone" />
+
+    <EditText
+    	android:id="@+id/zombie_code"
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:layout_alignLeft="@+id/human_code"
+    	android:layout_below="@+id/human_code"
+    	android:ems="10"
+    	android:hint="@string/pages_tag_zombie_hint"
+    	android:textColor="@android:color/white"
+    	android:visibility="gone" >
+
+    	<requestFocus />
+    </EditText>
+
+
+</RelativeLayout>
