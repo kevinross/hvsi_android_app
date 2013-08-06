@@ -56,6 +56,8 @@ public class RegisterActivity extends RoboSherlockActivity {
 	@InjectView(R.id.register_status_message) private TextView mLoginStatusMessageView;
 	EditText[] views = new EditText[8];
 	String[] values = new String[views.length + 1];
+	String liability = null;
+	String safety = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +94,13 @@ public class RegisterActivity extends RoboSherlockActivity {
 						attemptRegister();
 					}
 				});
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				liability = (String)API.api().get("liability");
+				safety = (String)API.api().get("safety");
+			}
+		}).run();
 	}
 
 	/**
@@ -186,9 +195,26 @@ public class RegisterActivity extends RoboSherlockActivity {
 	 * the user.
 	 */
 	public class UserLoginTask extends AsyncTask<Void, Void, HashMap<String,String>> {
+		private void do_eula(boolean isliability) {
+			AlertDialog.Builder eula = new AlertDialog.Builder(RegisterActivity.this);
+			eula.setTitle(isliability?R.string.pages_register_eula_liability_title:R.string.pages_register_eula_safety_title);
+			eula.setMessage(isliability?liability:safety);
+			eula.setPositiveButton(R.string.pages_register_eula_agree, null);
+			eula.setNegativeButton(R.string.pages_register_eula_disagree, new OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					UserLoginTask.this.cancel(true);
+				}
+			});
+		}
+		protected void onPreExecute() {
+			do_eula(false);
+			if (UserLoginTask.this.isCancelled())
+				return;
+			do_eula(true);
+		}
 		@Override
 		protected HashMap<String,String> doInBackground(Void... params) {
-			// TODO: attempt authentication against a network service.
 			return (HashMap<String,String>)API.api().call("register", values);
 		}
 
@@ -201,11 +227,11 @@ public class RegisterActivity extends RoboSherlockActivity {
 				finish();
 			} else {
 				AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-				int res = R.string.error_registration_other;
-				res = result.get("message").equals("dup")?R.string.error_registration_dup:res;
-				res = result.get("message").equals("pass")?R.string.error_registration_pass:res;
+				int res = R.string.pages_register_errors_other;
+				res = result.get("message").equals("dup")?R.string.pages_register_errors_dup:res;
+				res = result.get("message").equals("pass")?R.string.pages_register_errors_pass:res;
 				builder.setMessage(getString(res)).
-						setTitle(getString(R.string.error_bad_registration)).
+						setTitle(getString(R.string.pages_register_errors_bad)).
 						setPositiveButton("OK", null).
 						show();
 			}
